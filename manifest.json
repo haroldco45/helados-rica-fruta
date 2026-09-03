@@ -1,0 +1,23 @@
+{
+  "name": "Helados Rica Fruta — Caucasia",
+  "short_name": "Rica Fruta",
+  "description": "Menú y pedidos en línea de Helados Rica Fruta: helados artesanales, ensaladas de frutas, waffles, comidas rápidas y pulpas en Caucasia.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FCE1E5",
+  "theme_color": "#E8336D",
+  "lang": "es-CO",
+  "categories": ["food", "shopping", "lifestyle"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Helados artesanales", "url": "./index.html#artesanales" },
+    { "name": "Comidas rápidas", "url": "./index.html#rapidas" },
+    { "name": "Pulpas", "url": "./index.html#pulpas" }
+  ]
+}
