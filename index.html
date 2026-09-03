@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Helados Rica Fruta — Caucasia | Pide en línea</title>
+<meta name="description" content="Helados artesanales, ensaladas de frutas, waffles, comidas rápidas y pulpas en Caucasia. Arma tu pedido y envíalo por WhatsApp en segundos.">
+<meta name="theme-color" content="#E8336D">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Helados Rica Fruta — Caucasia">
+<meta property="og:description" content="Helados artesanales, ensaladas de frutas, waffles, comidas rápidas y pulpas. Pide por WhatsApp en segundos.">
+<meta property="og:image" content="https://haroldco45.github.io/ricafruta/og-image.jpg">
+<meta property="og:url" content="https://haroldco45.github.io/ricafruta/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Helados Rica Fruta">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Helados Rica Fruta — Caucasia">
+<meta name="twitter:image" content="https://haroldco45.github.io/ricafruta/og-image.jpg">
+
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Rica Fruta">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Yellowtail&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --rosa:#FCE1E5; --raya:#F7C9D0; --crema:#FFF5F7;
+  --vino:#6E2A38; --vino-suave:#9A6470;
+  --magenta:#E8336D; --lima:#8CD32B; --naranja:#F97316; --morado:#8B1FA9;
+  --tag:#FFD9E0;
+  --sombra:0 6px 0 rgba(110,42,56,.10);
+  --safe: env(safe-area-inset-bottom, 0px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  font-family:'Barlow Semi Condensed',system-ui,sans-serif;
+  color:var(--vino); background:var(--rosa);
+  background-image:repeating-linear-gradient(90deg,var(--raya) 0 26px,transparent 26px 52px);
+  font-size:17px; line-height:1.35; padding-bottom:calc(96px + var(--safe));
+}
+h1,h2,h3{margin:0}
+button{font-family:inherit;font-size:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:16px;color:var(--vino)}
+:focus-visible{outline:3px solid var(--morado);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 14px}
+
+/* ---------- SPLASH ---------- */
+#splash{position:fixed;inset:0;z-index:99;background:var(--rosa);
+  background-image:repeating-linear-gradient(90deg,var(--raya) 0 26px,transparent 26px 52px);
+  display:grid;place-items:center;transition:opacity .5s ease}
+#splash.off{opacity:0;pointer-events:none}
+#splash .mark{width:210px;animation:pop .7s cubic-bezier(.2,1.4,.4,1)}
+#splash p{font-family:'Yellowtail',cursive;font-size:26px;color:var(--magenta);margin:14px 0 0}
+@keyframes pop{from{transform:scale(.6) rotate(-8deg);opacity:0}to{transform:none;opacity:1}}
+
+/* ---------- HEADER ---------- */
+header{padding:18px 0 8px;text-align:center}
+header .mark{width:132px;display:block;margin:0 auto}
+.rotulo{font-family:'Yellowtail',cursive;font-size:34px;color:var(--vino);line-height:1;margin-top:6px}
+.sub{font-size:15px;color:var(--vino-suave);letter-spacing:.3px;margin-top:4px}
+.estado{display:inline-flex;align-items:center;gap:7px;margin-top:10px;background:#fff;
+  border:2px dashed var(--magenta);border-radius:999px;padding:5px 14px;font-weight:600;font-size:15px}
+.punto{width:9px;height:9px;border-radius:50%;background:var(--lima);box-shadow:0 0 0 3px rgba(140,211,43,.3)}
+.punto.cerrado{background:#c0392b;box-shadow:0 0 0 3px rgba(192,57,43,.25)}
+.acciones{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:12px 0 4px}
+.pill{background:#fff;border:2px solid var(--vino);border-radius:999px;padding:7px 15px;font-weight:600;
+  box-shadow:0 3px 0 var(--vino);transition:transform .12s,box-shadow .12s}
+.pill:active{transform:translateY(3px);box-shadow:0 0 0 var(--vino)}
+.pill.acento{background:var(--lima);border-color:#5f9613;box-shadow:0 3px 0 #5f9613}
+.pill[hidden]{display:none}
+
+/* ---------- BUSCADOR + CHIPS ---------- */
+.sticky{position:sticky;top:0;z-index:20;background:linear-gradient(var(--rosa) 78%,rgba(252,225,229,0));
+  padding-top:8px;margin-top:14px}
+.buscador{display:flex;align-items:center;gap:8px;background:#fff;border:2px solid var(--vino);
+  border-radius:999px;padding:9px 16px;box-shadow:var(--sombra)}
+.buscador input{border:0;outline:0;flex:1;background:none;min-width:0}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:10px 2px 12px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{white-space:nowrap;background:#fff;border:2px solid var(--vino-suave);color:var(--vino);
+  border-radius:999px;padding:6px 14px;font-weight:600;font-size:15px}
+.chip.on{background:var(--magenta);border-color:var(--magenta);color:#fff}
+
+/* ---------- SECCIONES ---------- */
+section{margin:26px 0 8px;scroll-margin-top:118px}
+.titulo{font-family:'Yellowtail',cursive;font-size:38px;color:var(--vino);line-height:1.05}
+.titulo small{display:block;font-family:'Barlow Semi Condensed';font-size:15px;color:var(--vino-suave);
+  letter-spacing:.4px;margin-top:2px}
+.item{border-bottom:2px dashed rgba(110,42,56,.28);padding:16px 0}
+.item:last-child{border-bottom:0}
+.item h3{font-family:'Yellowtail',cursive;font-size:27px;font-weight:400;line-height:1.1}
+.ingr{font-size:15.5px;color:var(--vino-suave);margin:5px 0 0;max-width:58ch}
+.fila{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.tallas{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
+.precio{position:relative;background:var(--tag);border:2px dashed var(--magenta);border-radius:10px;
+  padding:6px 13px;font-weight:700;font-size:17px;box-shadow:2px 3px 0 rgba(110,42,56,.13);
+  display:flex;flex-direction:column;align-items:center;line-height:1.15;transition:transform .12s}
+.precio span{font-size:13px;font-weight:600;color:var(--vino-suave);letter-spacing:.5px}
+.precio:active{transform:scale(.94)}
+.precio.solo{align-self:flex-start;flex-shrink:0}
+.insignia{display:inline-block;background:var(--lima);color:#33520a;font-weight:700;font-size:13px;
+  border-radius:999px;padding:2px 9px;margin-left:7px;vertical-align:3px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:12px}
+.mini{background:#fff;border:2px solid rgba(110,42,56,.2);border-radius:12px;padding:10px 12px;text-align:left;
+  display:flex;justify-content:space-between;align-items:center;gap:8px;box-shadow:var(--sombra);font-weight:600}
+.mini b{color:var(--magenta);white-space:nowrap}
+.nota{font-size:15px;color:var(--vino-suave);margin-top:10px}
+
+/* ---------- CARRUSEL FAVORITOS ---------- */
+.carrusel{display:flex;gap:12px;overflow-x:auto;padding:4px 2px 14px;scroll-snap-type:x mandatory;scrollbar-width:none}
+.carrusel::-webkit-scrollbar{display:none}
+.card{scroll-snap-align:start;flex:0 0 168px;background:#fff;border:2px solid var(--vino);border-radius:16px;
+  padding:12px;box-shadow:0 4px 0 var(--vino);text-align:left}
+.card .emo{font-size:30px;line-height:1}
+.card h4{margin:6px 0 2px;font-size:18px;font-weight:700}
+.card p{margin:0;font-size:14px;color:var(--vino-suave);min-height:34px}
+.card b{color:var(--magenta)}
+
+/* ---------- BARRA CARRITO ---------- */
+#barra{position:fixed;left:0;right:0;bottom:0;z-index:30;padding:10px 14px calc(10px + var(--safe));
+  background:linear-gradient(rgba(252,225,229,0),var(--rosa) 45%);transform:translateY(140%);transition:transform .3s}
+#barra.on{transform:none}
+#barra button{width:100%;max-width:732px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;background:var(--magenta);color:#fff;border-radius:16px;padding:14px 18px;font-weight:700;font-size:18px;
+  box-shadow:0 5px 0 #ab2350}
+#barra .bolsa{background:rgba(255,255,255,.24);border-radius:10px;padding:3px 10px;font-size:16px}
+
+/* ---------- HOJAS / MODALES ---------- */
+.velo{position:fixed;inset:0;background:rgba(58,17,26,.55);z-index:40;opacity:0;pointer-events:none;transition:opacity .25s}
+.velo.on{opacity:1;pointer-events:auto}
+.hoja{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--crema);border-radius:26px 26px 0 0;
+  max-height:92vh;overflow-y:auto;transform:translateY(101%);transition:transform .3s cubic-bezier(.2,.8,.3,1);
+  padding:8px 16px calc(20px + var(--safe));box-shadow:0 -8px 30px rgba(58,17,26,.2)}
+.hoja.on{transform:none}
+.asa{width:52px;height:5px;border-radius:99px;background:rgba(110,42,56,.25);margin:8px auto 14px}
+.hoja h2{font-family:'Yellowtail',cursive;font-size:32px;font-weight:400;margin-bottom:4px}
+.hoja .wrap{padding:0}
+.cerrar{position:absolute;right:14px;top:14px;font-size:22px;width:36px;height:36px;border-radius:50%;background:#fff;
+  border:2px solid var(--vino);line-height:1}
+.opciones{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0 4px}
+.opt{border:2px solid var(--vino-suave);border-radius:12px;padding:9px 14px;background:#fff;font-weight:600;text-align:center}
+.opt.on{background:var(--vino);color:#fff;border-color:var(--vino)}
+.opt small{display:block;font-weight:500;opacity:.75}
+label.campo{display:block;margin-top:14px;font-weight:600;font-size:16px}
+label.campo input,label.campo textarea,label.campo select{width:100%;margin-top:5px;padding:11px 13px;border-radius:12px;
+  border:2px solid rgba(110,42,56,.3);background:#fff;outline:0}
+label.campo input:focus,label.campo textarea:focus,label.campo select:focus{border-color:var(--magenta)}
+textarea{resize:vertical;min-height:64px}
+.contador{display:flex;align-items:center;gap:14px;margin-top:16px}
+.contador button{width:44px;height:44px;border-radius:50%;background:#fff;border:2px solid var(--vino);
+  font-size:22px;font-weight:700;box-shadow:0 3px 0 var(--vino)}
+.contador b{font-size:22px;min-width:28px;text-align:center}
+.principal{width:100%;background:var(--magenta);color:#fff;border-radius:16px;padding:15px;font-weight:700;
+  font-size:18px;box-shadow:0 5px 0 #ab2350;margin-top:18px}
+.principal:disabled{background:#c9a4ad;box-shadow:0 5px 0 #ab8f96}
+.secundaria{width:100%;background:#fff;border:2px solid var(--vino);border-radius:14px;padding:12px;font-weight:600;margin-top:10px}
+
+/* ---------- CARRITO ---------- */
+.linea{display:flex;gap:12px;align-items:flex-start;padding:14px 0;border-bottom:2px dashed rgba(110,42,56,.22)}
+.linea .txt{flex:1}
+.linea h4{margin:0;font-size:18px;font-weight:700}
+.linea p{margin:2px 0 0;font-size:15px;color:var(--vino-suave)}
+.linea .ctrl{display:flex;align-items:center;gap:9px;margin-top:8px}
+.linea .ctrl button{width:32px;height:32px;border-radius:50%;background:#fff;border:2px solid var(--vino-suave);font-weight:700}
+.linea .val{font-weight:700;white-space:nowrap}
+.totales{margin-top:16px;font-size:17px}
+.totales div{display:flex;justify-content:space-between;padding:5px 0}
+.totales .grande{font-size:23px;font-weight:700;border-top:2px dashed rgba(110,42,56,.3);margin-top:6px;padding-top:10px}
+.vacio{text-align:center;padding:34px 10px;color:var(--vino-suave)}
+.vacio .emo{font-size:46px}
+.aviso{font-size:14.5px;color:var(--vino-suave);background:#fff;border:2px dashed rgba(110,42,56,.25);
+  border-radius:14px;padding:11px 13px;margin-top:14px}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-size:15.5px}
+.check input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--magenta);flex-shrink:0}
+.check a{color:var(--magenta)}
+
+/* ---------- TOAST ---------- */
+#toast{position:fixed;left:50%;bottom:calc(96px + var(--safe));transform:translate(-50%,20px);z-index:60;
+  background:var(--vino);color:#fff;padding:11px 20px;border-radius:999px;font-weight:600;opacity:0;
+  pointer-events:none;transition:.25s;max-width:90vw;text-align:center}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+footer{text-align:center;padding:34px 16px 20px;color:var(--vino-suave);font-size:14.5px;line-height:1.6}
+footer strong{color:var(--vino)}
+.sin{display:none!important}
+</style>
+</head>
+<body>
+
+<!-- ══════════ SPLASH ══════════ -->
+<div id="splash">
+  <div style="text-align:center">
+    <div class="mark" id="markSplash"></div>
+    <p>Un pedacito de fruta feliz</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <header>
+    <div class="mark" id="markHeader"></div>
+    <h1 class="rotulo">Helados Rica Fruta</h1>
+    <p class="sub">Caucasia, Antioquia · Heladería y fruterí­a</p>
+    <div class="estado"><i class="punto" id="punto"></i><span id="horario">Cargando…</span></div>
+    <div class="acciones">
+      <button class="pill" id="btnLlamar">Llamar</button>
+      <button class="pill" id="btnCompartir">Compartir</button>
+      <button class="pill acento" id="btnInstalar" hidden>Instalar la app</button>
+    </div>
+  </header>
+
+  <div class="sticky">
+    <div class="buscador">
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#9A6470" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Buscar helado, waffle, jugo…" aria-label="Buscar en el menú">
+    </div>
+    <nav class="chips" id="chips"></nav>
+  </div>
+
+  <section id="populares">
+    <h2 class="titulo">Los más pedidos<small>Toca uno y va directo a tu pedido</small></h2>
+    <div class="carrusel" id="carrusel"></div>
+  </section>
+
+  <main id="menu"></main>
+
+  <footer>
+    <p>Pedidos y domicilios en Caucasia · <b id="telPie"></b><br>Síguenos en Facebook: Helados RicaFruta - Caucasia</p>
+    <p><button class="pill" id="btnPrivacidad" style="font-size:14px;padding:5px 12px">Política de datos</button></p>
+    <p><strong>Desarrollada por Vibras Positivas HM — Derechos de Autor Reservados</strong></p>
+  </footer>
+</div>
+
+<!-- ══════════ BARRA CARRITO ══════════ -->
+<div id="barra">
+  <button id="btnCarrito">
+    <span class="bolsa" id="bolsa">0</span>
+    <span>Ver mi pedido</span>
+    <span id="totalBarra">$0</span>
+  </button>
+</div>
+
+<div class="velo" id="velo"></div>
+
+<!-- ══════════ HOJA PRODUCTO ══════════ -->
+<div class="hoja" id="hojaItem" role="dialog" aria-modal="true" aria-labelledby="itNombre">
+  <div class="asa"></div>
+  <button class="cerrar" data-cerrar>✕</button>
+  <div class="wrap">
+    <h2 id="itNombre"></h2>
+    <p class="ingr" id="itIngr"></p>
+    <div id="itTallas"></div>
+    <label class="campo">Notas para la cocina
+      <textarea id="itNotas" placeholder="Ej: sin queso, poca leche condensada, sin cereza…" maxlength="140"></textarea>
+    </label>
+    <div class="contador">
+      <button id="menos" aria-label="Quitar uno">−</button>
+      <b id="cant">1</b>
+      <button id="mas" aria-label="Agregar uno">+</button>
+      <span style="margin-left:auto;font-size:21px;font-weight:700" id="itTotal"></span>
+    </div>
+    <button class="principal" id="btnAgregar">Agregar al pedido</button>
+  </div>
+</div>
+
+<!-- ══════════ HOJA CARRITO ══════════ -->
+<div class="hoja" id="hojaCarrito" role="dialog" aria-modal="true" aria-labelledby="tCarrito">
+  <div class="asa"></div>
+  <button class="cerrar" data-cerrar>✕</button>
+  <div class="wrap">
+    <h2 id="tCarrito">Mi pedido</h2>
+    <div id="lineas"></div>
+    <div id="resumen"></div>
+  </div>
+</div>
+
+<!-- ══════════ HOJA DATOS ══════════ -->
+<div class="hoja" id="hojaDatos" role="dialog" aria-modal="true" aria-labelledby="tDatos">
+  <div class="asa"></div>
+  <button class="cerrar" data-cerrar>✕</button>
+  <div class="wrap">
+    <h2 id="tDatos">¿Cómo lo entregamos?</h2>
+    <div class="opciones" id="modoEntrega">
+      <button class="opt on" data-modo="domicilio">Domicilio</button>
+      <button class="opt" data-modo="tienda">Recoger en tienda</button>
+    </div>
+    <label class="campo">Tu nombre<input id="fNombre" autocomplete="name" placeholder="Nombre y apellido"></label>
+    <label class="campo">WhatsApp<input id="fTel" type="tel" inputmode="numeric" autocomplete="tel" placeholder="300 000 0000"></label>
+    <div id="camposDom">
+      <label class="campo">Dirección<input id="fDir" autocomplete="street-address" placeholder="Calle 20 #15-30"></label>
+      <label class="campo">Barrio<input id="fBarrio" placeholder="Ej: El Bosque"></label>
+    </div>
+    <label class="campo">Forma de pago
+      <select id="fPago">
+        <option>Efectivo</option><option>Nequi</option><option>Daviplata</option><option>Transferencia</option><option>Datáfono</option>
+      </select>
+    </label>
+    <label class="campo" id="wrapVuelto">¿Con cuánto pagas? <span style="font-weight:400;color:var(--vino-suave)">(opcional)</span>
+      <input id="fVuelto" inputmode="numeric" placeholder="50.000">
+    </label>
+    <label class="campo">Nota del pedido <span style="font-weight:400;color:var(--vino-suave)">(opcional)</span>
+      <input id="fNota" placeholder="Timbre dañado, llamar al llegar…">
+    </label>
+    <label class="check"><input type="checkbox" id="fHabeas">
+      <span>Autorizo el tratamiento de mis datos para gestionar y entregar este pedido, conforme a la Ley 1581 de 2012. <a href="#" id="verPolitica">Ver política</a></span>
+    </label>
+    <button class="principal" id="btnEnviar">Enviar pedido por WhatsApp</button>
+    <p class="aviso">Tu pedido se abre en WhatsApp ya escrito. Nada se guarda en servidores: los datos viajan solo en ese mensaje y quedan en tu teléfono.</p>
+  </div>
+</div>
+
+<!-- ══════════ HOJA POLÍTICA ══════════ -->
+<div class="hoja" id="hojaPol" role="dialog" aria-modal="true" aria-labelledby="tPol">
+  <div class="asa"></div>
+  <button class="cerrar" data-cerrar>✕</button>
+  <div class="wrap">
+    <h2 id="tPol">Política de tratamiento de datos</h2>
+    <p class="ingr" style="max-width:none">En cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013:</p>
+    <ul class="ingr" style="max-width:none;padding-left:20px">
+      <li><b>Responsable:</b> Helados Rica Fruta, Caucasia (Antioquia).</li>
+      <li><b>Datos que pedimos:</b> nombre, teléfono y dirección, solo cuando eliges domicilio.</li>
+      <li><b>Finalidad:</b> preparar, confirmar y entregar tu pedido. Nada más.</li>
+      <li><b>Dónde quedan:</b> esta app no tiene servidor propio. Tus datos se escriben en el mensaje de WhatsApp y se guardan localmente en tu dispositivo para no volver a pedírtelos.</li>
+      <li><b>Tus derechos:</b> conocer, actualizar, rectificar y solicitar la eliminación de tus datos escribiéndonos por WhatsApp.</li>
+      <li><b>No compartimos</b> tu información con terceros con fines comerciales.</li>
+    </ul>
+    <button class="secundaria" id="borrarDatos">Borrar mis datos de este dispositivo</button>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN — ajusta estos valores y listo
+   ══════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  whatsapp: "573117700431",   // ⚠️ CAMBIAR por el WhatsApp de Helados Rica Fruta (formato 57XXXXXXXXXX)
+  domicilio: 3000,            // valor del domicilio en Caucasia (0 = gratis)
+  abre: 10,                   // hora de apertura (24h)
+  cierra: 21                  // hora de cierre (24h)
+};
+
+/* ══════════ LOGO (SVG en línea) ══════════ */
+const LOGO = `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Helados Rica Fruta">
+<circle cx="100" cy="100" r="96" fill="#E8336D"/><circle cx="100" cy="100" r="88" fill="#FDC72E"/>
+<circle cx="100" cy="100" r="77" fill="#F97316"/><circle cx="100" cy="100" r="66" fill="#fff"/>
+<circle cx="100" cy="100" r="60" fill="#8B1FA9"/>
+<g stroke="#fff" stroke-width="3" stroke-linejoin="round">
+<path d="M44 150l6-17 17-6-14-12 2-18 15 10 16-8-4 18 12 13-18 2z" fill="#8CD32B"/>
+<path d="M156 150l-6-17-17-6 14-12-2-18-15 10-16-8 4 18-12 13 18 2z" fill="#8CD32B"/>
+<path d="M78 168l4-13 12-5-10-9 1-13 11 8 12-6-3 13 9 10-14 2z" fill="#E8336D"/>
+<path d="M122 168l-4-13-12-5 10-9-1-13-11 8-12-6 3 13-9 10 14 2z" fill="#FDC72E"/></g>
+<rect x="93" y="115" width="14" height="42" rx="6" fill="#DEA874"/>
+<rect x="76" y="42" width="48" height="82" rx="22" fill="#F97316"/>
+<rect x="84" y="52" width="11" height="36" rx="5" fill="#FF9A44"/>
+</svg>`;
+document.getElementById('markSplash').innerHTML = LOGO;
+document.getElementById('markHeader').innerHTML = LOGO;
+
+/* ══════════ MENÚ ══════════ */
+const T = (l,p)=>({label:l,precio:p});
+const MENU = [
+{id:'frutas', nombre:'Frutas y helados', lema:'Lo clásico de la casa, servido en copa', items:[
+  {n:'Ensalada de Frutas', d:'Piña, papaya, manzana, pera, banano, fresas, uvas y kiwi con leche condensada, queso mozarella, helado de vainilla, crema chantilly y piazza.', t:[T('8 Oz',12000),T('16 Oz',22000),T('24 Oz',34000)], top:1, e:'🍓'},
+  {n:'Ensalada de Frutas sólo frutas', d:'La misma fruta fresca, sin helado ni crema.', t:[T('8 Oz',8000),T('16 Oz',15000),T('24 Oz',22000)], e:'🥝'},
+  {n:'Salpicón con Helado', d:'Piña, papaya, manzana, pera y banano con helado de vainilla, leche condensada y piazza.', t:[T('9 Oz',7000),T('12 Oz',10500),T('16 Oz',14000)], top:1, e:'🍹'},
+  {n:'Fresas con Crema', d:'3 bolas de helado de vainilla, fresas en rodajas, leche condensada, crema chantilly y piazza.', t:[T('8 Oz',12000),T('16 Oz',22000),T('24 Oz',34000)], top:1, e:'🍨'},
+  {n:'Melocotones con Crema', d:'3 bolas de helado de vainilla, melocotones en julianas, leche condensada, crema chantilly y piazza.', t:[T('8 Oz',12000),T('16 Oz',22000),T('24 Oz',34000)], e:'🍑'},
+  {n:'Fresas y Melocotones con Crema', d:'3 bolas de helado de vainilla, melocotones en julianas, fresas en rodajas, crema chantilly, leche condensada y piazza.', t:[T('8 Oz',12000),T('16 Oz',22000),T('24 Oz',34000)], e:'🍧'},
+  {n:'Banana Split', d:'3 bolas de helado (fresa, vainilla y chocolate), 1 banano, crema chantilly, salsa de fresa, arequipe, maní, cerezas y piazza.', t:[T('Porción',17000)], top:1, e:'🍌'},
+  {n:'Waffle Sencillo', d:'Banano, fresas, kiwi, queso mozarella, helado de vainilla y salsa de arequipe.', t:[T('Porción',17000)], e:'🧇'},
+  {n:'Waffle Especial', d:'Banano, fresas, kiwi, queso mozarella, helado de vainilla, salsa de arequipe, crema chantilly y cereza.', t:[T('Porción',22000)], top:1, e:'🧇'}
+]},
+{id:'brownies', nombre:'Brownies y vasitos', lema:'Caliente por fuera, helado por dentro', items:[
+  {n:'Brownie Caliente con Helado', d:'1 brownie, 2 bolas de helado de vainilla, crema chantilly, cereza, salsa de fresa y piazza.', t:[T('Porción',16000)], top:1, e:'🍫'},
+  {n:'MiniBrownie Caliente con Helado', d:'1 minibrownie, 2 minibolas de helado de vainilla, crema chantilly, cereza, salsa de fresa y piazza.', t:[T('Porción',8000)], e:'🍫'},
+  {n:'Vasitos', d:'2 bolas de helado con salsas y piazza.', t:[T('5 Oz',5000),T('9 Oz',7000),T('12 Oz',10000),T('16 Oz',12000)], top:1, e:'🍦'}
+]},
+{id:'artesanales', nombre:'Helados artesanales', lema:'19 sabores hechos en casa · $3.600 la bola', items:[
+  {n:'Bola de helado artesanal', d:'Elige tu sabor favorito.', t:[T('1 bola',3600)], e:'🍨',
+   sabores:['Melocotón','Ron con Pasas','Arequipe con Coco','Arequipe con Pasas','Chocolate con Maní','Maracuyá','Galleta Oreo','Guanábana','Vainilla Mora','Mango Biche','Café','Coco','Piña','Maní','Mora','Fresa','Zapote','Níspero','Salpicón']},
+  {n:'Queso con Arequipe', d:'', t:[T('Porción',4400)], e:'🧀'},
+  {n:'Queso con Bocadillo', d:'', t:[T('Porción',4400)], e:'🧀'},
+  {n:'Helado Light', d:'Endulzado sin azúcar añadida.', t:[T('Porción',4000)], e:'🥄', sabores:['Maracuyá','Mora']},
+  {n:'Paleta de Kola con Leche', d:'', t:[T('Unidad',1700)], e:'🍭'},
+  {n:'Paleta de Agua', d:'', t:[T('Unidad',1000)], e:'🧊'}
+]},
+{id:'obleas', nombre:'Obleas y postres', lema:'Para llevar o comer aquí mismo', items:[
+  {n:'Oblea Tradicional', d:'Arequipe, lecherita, salsa de mora y queso mozarella.', t:[T('Unidad',5000)], top:1, e:'🥮'},
+  {n:'Oblea Especial', d:'Arequipe, lecherita, salsa de fresa, queso mozarella y crema chantilly.', t:[T('Unidad',7000)], e:'🥮'},
+  {n:'Postre de la casa', d:'Porción individual.', t:[T('Porción',9500)], e:'🍮',
+   sabores:['Napoleón','Milo','Oreo','Mosaico de Gelatina','Tres Leches con Galleta','Fantasía de Maracuyá']},
+  {n:'Cheesecake', d:'', t:[T('Porción',12000)], e:'🍰'},
+  {n:'Torta de naranja o yogurt', d:'', t:[T('Porción',4500)], e:'🍊', sabores:['Naranja','Yogurt']},
+  {n:'Torta de chocolate con arequipe', d:'', t:[T('Porción',5500)], e:'🎂'},
+  {n:'Torta de zanahoria o banano', d:'', t:[T('Porción',5000)], e:'🥕', sabores:['Zanahoria','Banano']},
+  {n:'Palitos de Queso', d:'', t:[T('Unidad',2200)], e:'🥖'},
+  {n:'Palitos de Queso con Bocadillo', d:'', t:[T('Unidad',2600)], e:'🥖'},
+  {n:'Palitos de Jamón y Queso', d:'', t:[T('Unidad',2800)], e:'🥖'}
+]},
+{id:'rapidas', nombre:'Comidas rápidas', lema:'De 5 de la tarde en adelante', items:[
+  {n:'Sandwich', d:'Pan tajado, lechuga, tomate, cebolla caramelizada, tocineta, jamón, queso mozarella y mayonesa.', t:[T('Unidad',12000)], e:'🥪'},
+  {n:'Hamburguesa', d:'Pan artesanal, carne de 120 g, lechuga, tomate, cebolla caramelizada, tocineta, queso mozarella, papas a la francesa y salsas.', t:[T('Unidad',22000)], top:1, e:'🍔'},
+  {n:'Perro', d:'Pan, ensalada dulce, tocineta, salchicha Zenú, queso mozarella, huevos de codorniz y salsas.', t:[T('Unidad',14500)], e:'🌭'},
+  {n:'Perra', d:'Pan, ensalada dulce, 4 tocinetas, queso mozarella, huevos de codorniz y salsas.', t:[T('Unidad',15500)], e:'🌭'},
+  {n:'Salchipapa', d:'Papas a la francesa 300 g, 2 salchichas long Zenú, tocinetas, huevos de codorniz, queso mozarella y salsas.', t:[T('Porción',22000)], top:1, e:'🍟'},
+  {n:'Chuzo de Pollo', d:'Chuzo, papas a la francesa, ensalada dulce (lechuga, fresas, uva, piña, vinagreta) y salsas.', t:[T('Porción',22000)], e:'🍢'}
+]},
+{id:'bebidas', nombre:'Bebidas', lema:'Malteadas, jugos y limonadas', items:[
+  {n:'Malteada', d:'Todas llevan crema chantilly y salsas.', t:[T('Vaso',13500)], top:1, e:'🥤',
+   sabores:['Vainilla','Fresa','Chocolate','Tres Leches','Oreo','Milo','Café','Brownie']},
+  {n:'Jugo Natural', d:'Fruta natural, sin conservantes.', t:[T('En agua',7500),T('En leche',9500)], e:'🧃',
+   sabores:['Fresa','Mora','Níspero','Zapote','Maracuyá','Tamarindo','Mandarina','Guanábana','Papaya','Lulo','Piña','Uva','Banano','Mango','Mango Biche']},
+  {n:'Jugo Especial', d:'Mezclas de la casa.', t:[T('Vaso',10000)], e:'🍹', sabores:['Frutos Rojos','Mandarina - Fresa','Piña - Yerbabuena']},
+  {n:'Limonada Especial', d:'', t:[T('Vaso',10000)], top:1, e:'🍋', sabores:['Coco','Cereza','Sandía','Yerbabuena','Milo']},
+  {n:'Bebida embotellada', d:'Precio según presentación, te lo confirmamos al responder el pedido.', t:[T('Consultar',0)], e:'🥤', consultar:1,
+   sabores:['Soda 400 ml','Agua 250 ml','Agua 600 ml','Gaseosa 250 ml','Coca-Cola 400 ml','Coca-Cola 400 ml sin azúcar','Sprite 400 ml','Cerveza Heineken']}
+]},
+{id:'pulpas', nombre:'Pulpas congeladas', lema:'Paquetes para llevar a casa', items:[
+  {n:'Pulpa de Limonada de Coco', d:'7 unidades', t:[T('Paquete',30000)], e:'🥥'},
+  {n:'Pulpa de Limonada Cerezada', d:'8 unidades', t:[T('Paquete',32000)], e:'🍒'},
+  {n:'Pulpa de Limonada de Yerbabuena', d:'7 unidades', t:[T('Paquete',29000)], e:'🌿'},
+  {n:'Pulpa de Limonada de Sandía', d:'6 unidades', t:[T('Paquete',26000)], e:'🍉'},
+  {n:'Pulpa de Limonada de Lychee', d:'10 unidades', t:[T('Paquete',35000)], e:'🍈'},
+  {n:'Pulpa de Frutos Rojos', d:'7 unidades', t:[T('Paquete',29000)], e:'🍓'},
+  {n:'Pulpa de Frutos Amarillos', d:'7 unidades', t:[T('Paquete',29000)], e:'🍍'},
+  {n:'Pulpa de Frutos Verdes', d:'7 unidades', t:[T('Paquete',29000)], e:'🥬'},
+  {n:'Pulpa de Piña Yerbabuena', d:'7 unidades', t:[T('Paquete',29000)], e:'🍍'},
+  {n:'Pulpa Verde Mente', d:'7 unidades', t:[T('Paquete',32000)], e:'🌱'},
+  {n:'Pulpa de Tomate de Árbol', d:'10 unidades', t:[T('Paquete',24000)], e:'🍅'},
+  {n:'Pulpa de Guayaba', d:'10 unidades', t:[T('Paquete',24000)], e:'🍐'},
+  {n:'Pulpa de Mandarina', d:'10 unidades', t:[T('Paquete',29000)], e:'🍊'},
+  {n:'Pulpa de Fresa', d:'10 unidades', t:[T('Paquete',24000)], e:'🍓'},
+  {n:'Pulpa de Mango', d:'10 unidades', t:[T('Paquete',24000)], e:'🥭'},
+  {n:'Pulpa de Mango Biche', d:'10 unidades', t:[T('Paquete',24000)], e:'🥭'},
+  {n:'Pulpa de Mora', d:'10 unidades', t:[T('Paquete',24000)], e:'🫐'},
+  {n:'Pulpa de Uva', d:'10 unidades', t:[T('Paquete',24000)], e:'🍇'},
+  {n:'Pulpa de Piña', d:'10 unidades', t:[T('Paquete',24000)], e:'🍍'},
+  {n:'Pulpa de Lulo', d:'10 unidades', t:[T('Paquete',24000)], e:'🟠'},
+  {n:'Pulpa de Guanábana', d:'10 unidades', t:[T('Paquete',26000)], e:'🥥'},
+  {n:'Pulpa de Maracuyá', d:'10 unidades', t:[T('Paquete',35000)], e:'🥭'},
+  {n:'Pulpa de Tamarindo', d:'10 unidades', t:[T('Paquete',26000)], e:'🟤'}
+]}
+];
+
+/* ══════════ UTILIDADES ══════════ */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const cop = n => '$' + n.toLocaleString('es-CO');
+const norm = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+
+const guardar = (k,v)=>{ try{ localStorage.setItem('rf_'+k, JSON.stringify(v)); }catch(e){ MEM[k]=v; } };
+const leer = (k,def)=>{ try{ const v=localStorage.getItem('rf_'+k); return v?JSON.parse(v):(MEM[k]??def); }catch(e){ return MEM[k]??def; } };
+const MEM = {};
+
+let toastT;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2200); }
+
+/* ══════════ ESTADO ══════════ */
+let carrito = leer('carrito',[]) || [];
+let actual = null; // item abierto
+
+/* ══════════ PINTAR MENÚ ══════════ */
+const menuEl = $('#menu'), chipsEl = $('#chips');
+MENU.forEach((cat,ci)=>{
+  const chip = document.createElement('button');
+  chip.className='chip'; chip.textContent=cat.nombre; chip.dataset.ir=cat.id;
+  chipsEl.appendChild(chip);
+
+  const sec = document.createElement('section');
+  sec.id = cat.id;
+  sec.innerHTML = `<h2 class="titulo">${cat.nombre}<small>${cat.lema}</small></h2>`;
+  cat.items.forEach((it,ii)=>{
+    it._id = ci+'-'+ii; it._cat = cat.nombre;
+    const art = document.createElement('article');
+    art.className='item'; art.dataset.buscar = norm(it.n+' '+it.d+' '+(it.sabores||[]).join(' '));
+    const unica = it.t.length===1;
+    art.innerHTML = `
+      <div class="fila">
+        <div style="flex:1">
+          <h3>${it.n}${it.top?'<span class="insignia">Favorito</span>':''}</h3>
+          ${it.d?`<p class="ingr">${it.d}</p>`:''}
+          ${it.sabores?`<p class="ingr"><b>Sabores:</b> ${it.sabores.join(' · ')}</p>`:''}
+          ${unica?'':`<div class="tallas">${it.t.map(t=>`<button class="precio" data-abrir="${it._id}" data-t="${t.label}"><span>${t.label}</span>${cop(t.precio)}</button>`).join('')}</div>`}
+        </div>
+        ${unica?`<button class="precio solo" data-abrir="${it._id}" data-t="${it.t[0].label}">${it.consultar?'Consultar':cop(it.t[0].precio)}</button>`:''}
+      </div>`;
+    sec.appendChild(art);
+  });
+  menuEl.appendChild(sec);
+});
+
+/* carrusel de favoritos */
+const favs = MENU.flatMap(c=>c.items.filter(i=>i.top));
+$('#carrusel').innerHTML = favs.map(i=>`
+  <button class="card" data-abrir="${i._id}" data-t="${i.t[0].label}">
+    <div class="emo">${i.e}</div><h4>${i.n}</h4>
+    <p>${i._cat}</p><b>desde ${cop(i.t[0].precio)}</b>
+  </button>`).join('');
+
+const buscarItem = id => { const [c,i]=id.split('-'); return MENU[c].items[i]; };
+
+/* ══════════ NAVEGACIÓN ══════════ */
+chipsEl.addEventListener('click', e=>{
+  const c = e.target.closest('.chip'); if(!c) return;
+  document.getElementById(c.dataset.ir).scrollIntoView({behavior:'smooth',block:'start'});
+});
+const obs = new IntersectionObserver(es=>{
+  es.forEach(en=>{ if(en.isIntersecting){
+    $$('.chip').forEach(c=>c.classList.toggle('on', c.dataset.ir===en.target.id));
+    const on = chipsEl.querySelector('.chip.on');
+    if(on) on.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  }});
+},{rootMargin:'-120px 0px -70% 0px'});
+MENU.forEach(c=>obs.observe(document.getElementById(c.id)));
+
+/* ══════════ BUSCADOR ══════════ */
+$('#q').addEventListener('input', e=>{
+  const t = norm(e.target.value.trim());
+  $$('#menu .item').forEach(a=>a.classList.toggle('sin', t && !a.dataset.buscar.includes(t)));
+  $$('#menu section').forEach(s=>{
+    const vivos = s.querySelectorAll('.item:not(.sin)').length;
+    s.classList.toggle('sin', t && vivos===0);
+  });
+  $('#populares').classList.toggle('sin', !!t);
+});
+
+/* ══════════ HOJAS ══════════ */
+const velo = $('#velo');
+function abrirHoja(sel){ velo.classList.add('on'); $(sel).classList.add('on'); document.body.style.overflow='hidden'; }
+function cerrarTodo(){ velo.classList.remove('on'); $$('.hoja').forEach(h=>h.classList.remove('on')); document.body.style.overflow=''; }
+velo.addEventListener('click', cerrarTodo);
+$$('[data-cerrar]').forEach(b=>b.addEventListener('click', cerrarTodo));
+addEventListener('keydown', e=>{ if(e.key==='Escape') cerrarTodo(); });
+
+/* ══════════ HOJA PRODUCTO ══════════ */
+document.addEventListener('click', e=>{
+  const b = e.target.closest('[data-abrir]'); if(!b) return;
+  abrirItem(buscarItem(b.dataset.abrir), b.dataset.t);
+});
+
+function abrirItem(it, talla){
+  actual = {it, talla: talla||it.t[0].label, sabor: it.sabores? it.sabores[0]: null, cant:1};
+  $('#itNombre').textContent = it.n;
+  $('#itIngr').textContent = it.d || '';
+  $('#itIngr').style.display = it.d? '':'none';
+  $('#itNotas').value = '';
+  let html = '';
+  if(it.t.length>1) html += `<p style="font-weight:700;margin:14px 0 0">Tamaño</p><div class="opciones" data-grupo="talla">${
+    it.t.map(t=>`<button class="opt ${t.label===actual.talla?'on':''}" data-v="${t.label}">${t.label}<small>${cop(t.precio)}</small></button>`).join('')}</div>`;
+  if(it.sabores) html += `<p style="font-weight:700;margin:14px 0 0">Sabor</p><div class="opciones" data-grupo="sabor">${
+    it.sabores.map((s,i)=>`<button class="opt ${i===0?'on':''}" data-v="${s}">${s}</button>`).join('')}</div>`;
+  $('#itTallas').innerHTML = html;
+  $('#cant').textContent = 1;
+  pintarTotalItem();
+  abrirHoja('#hojaItem');
+}
+$('#itTallas').addEventListener('click', e=>{
+  const o = e.target.closest('.opt'); if(!o) return;
+  const g = o.parentElement.dataset.grupo;
+  [...o.parentElement.children].forEach(c=>c.classList.remove('on'));
+  o.classList.add('on'); actual[g] = o.dataset.v; pintarTotalItem();
+});
+const precioDe = a => a.it.t.find(t=>t.label===a.talla).precio;
+function pintarTotalItem(){
+  const p = precioDe(actual)*actual.cant;
+  $('#itTotal').textContent = actual.it.consultar? 'A consultar' : cop(p);
+}
+$('#mas').onclick = ()=>{ actual.cant++; $('#cant').textContent=actual.cant; pintarTotalItem(); };
+$('#menos').onclick = ()=>{ if(actual.cant>1){ actual.cant--; $('#cant').textContent=actual.cant; pintarTotalItem(); } };
+
+$('#btnAgregar').onclick = ()=>{
+  const notas = $('#itNotas').value.trim();
+  const nombre = actual.it.n + (actual.sabor? ' · '+actual.sabor : '');
+  const clave = [actual.it._id, actual.talla, actual.sabor, notas].join('|');
+  const ex = carrito.find(l=>l.clave===clave);
+  if(ex) ex.cant += actual.cant;
+  else carrito.push({clave, nombre, talla:actual.talla, notas, cant:actual.cant,
+                     precio:precioDe(actual), consultar:!!actual.it.consultar});
+  sincronizar(); cerrarTodo(); toast('Agregado: '+nombre);
+};
+
+/* ══════════ CARRITO ══════════ */
+function totales(){
+  const sub = carrito.reduce((s,l)=>s+l.precio*l.cant,0);
+  const dom = modo==='domicilio' && sub>0 ? CONFIG.domicilio : 0;
+  return {sub, dom, total: sub+dom};
+}
+function sincronizar(){
+  guardar('carrito', carrito);
+  const n = carrito.reduce((s,l)=>s+l.cant,0);
+  $('#bolsa').textContent = n;
+  $('#totalBarra').textContent = cop(totales().sub);
+  $('#barra').classList.toggle('on', n>0);
+  pintarCarrito();
+}
+function pintarCarrito(){
+  const cont = $('#lineas');
+  if(!carrito.length){
+    cont.innerHTML = `<div class="vacio"><div class="emo">🍦</div><p>Tu pedido está vacío.<br>Toca cualquier precio del menú para empezar.</p></div>`;
+    $('#resumen').innerHTML=''; return;
+  }
+  cont.innerHTML = carrito.map((l,i)=>`
+    <div class="linea">
+      <div class="txt">
+        <h4>${l.nombre}</h4>
+        <p>${l.talla}${l.notas? ' · '+l.notas : ''}</p>
+        <div class="ctrl">
+          <button data-op="-" data-i="${i}" aria-label="Quitar uno">−</button>
+          <b>${l.cant}</b>
+          <button data-op="+" data-i="${i}" aria-label="Agregar uno">+</button>
+          <button data-op="x" data-i="${i}" style="border-color:#c0392b;color:#c0392b;width:auto;border-radius:12px;padding:0 12px">Quitar</button>
+        </div>
+      </div>
+      <div class="val">${l.consultar? '—' : cop(l.precio*l.cant)}</div>
+    </div>`).join('');
+  const t = totales();
+  $('#resumen').innerHTML = `
+    <div class="totales">
+      <div><span>Productos</span><span>${cop(t.sub)}</span></div>
+      ${t.dom?`<div><span>Domicilio en Caucasia</span><span>${cop(t.dom)}</span></div>`:''}
+      <div class="grande"><span>Total</span><span>${cop(t.total)}</span></div>
+    </div>
+    ${carrito.some(l=>l.consultar)?'<p class="aviso">Los productos marcados con “—” se cotizan al confirmar el pedido.</p>':''}
+    <button class="principal" id="btnContinuar">Continuar con la entrega</button>
+    <button class="secundaria" id="btnSeguir">Seguir mirando el menú</button>`;
+  $('#btnContinuar').onclick = ()=>{ cerrarTodo(); setTimeout(()=>abrirHoja('#hojaDatos'),260); };
+  $('#btnSeguir').onclick = cerrarTodo;
+}
+$('#lineas').addEventListener('click', e=>{
+  const b = e.target.closest('[data-op]'); if(!b) return;
+  const i = +b.dataset.i;
+  if(b.dataset.op==='+') carrito[i].cant++;
+  else if(b.dataset.op==='-'){ carrito[i].cant--; if(carrito[i].cant<1) carrito.splice(i,1); }
+  else carrito.splice(i,1);
+  sincronizar();
+  if(!carrito.length) toast('Pedido vacío');
+});
+$('#btnCarrito').onclick = ()=>abrirHoja('#hojaCarrito');
+
+/* ══════════ DATOS DE ENTREGA ══════════ */
+let modo = leer('modo','domicilio');
+function pintarModo(){
+  $$('#modoEntrega .opt').forEach(o=>o.classList.toggle('on', o.dataset.modo===modo));
+  $('#camposDom').style.display = modo==='domicilio'? '':'none';
+  guardar('modo',modo); pintarCarrito();
+}
+$('#modoEntrega').addEventListener('click', e=>{
+  const o = e.target.closest('.opt'); if(!o) return; modo=o.dataset.modo; pintarModo();
+});
+const campos = ['fNombre','fTel','fDir','fBarrio','fPago','fNota'];
+campos.forEach(id=>{
+  const el = $('#'+id);
+  el.value = leer(id,'') || '';
+  el.addEventListener('change', ()=>guardar(id, el.value));
+});
+$('#fPago').addEventListener('change', ()=>{
+  $('#wrapVuelto').style.display = $('#fPago').value==='Efectivo'? '':'none';
+});
+pintarModo();
+$('#wrapVuelto').style.display = $('#fPago').value==='Efectivo'? '':'none';
+
+/* ══════════ ENVIAR ══════════ */
+$('#btnEnviar').onclick = ()=>{
+  const nombre = $('#fNombre').value.trim(), tel = $('#fTel').value.trim();
+  if(!carrito.length) return toast('Agrega algo al pedido primero');
+  if(!nombre) return foco('#fNombre','Escribe tu nombre');
+  if(tel.replace(/\D/g,'').length < 7) return foco('#fTel','Escribe un WhatsApp válido');
+  if(modo==='domicilio' && !$('#fDir').value.trim()) return foco('#fDir','Falta la dirección de entrega');
+  if(!$('#fHabeas').checked) return foco('#fHabeas','Marca la autorización de datos para continuar');
+
+  campos.forEach(id=>guardar(id,$('#'+id).value));
+  const t = totales();
+  const cod = 'RF-' + Date.now().toString().slice(-5);
+  const L = [];
+  L.push('*PEDIDO — HELADOS RICA FRUTA* 🍦');
+  L.push('Código: ' + cod);
+  L.push('──────────────');
+  carrito.forEach(l=>{
+    L.push(`▪ ${l.cant} x ${l.nombre} (${l.talla})  ${l.consultar? '— a consultar' : cop(l.precio*l.cant)}`);
+    if(l.notas) L.push(`   ↳ ${l.notas}`);
+  });
+  L.push('──────────────');
+  L.push('Productos: ' + cop(t.sub));
+  if(t.dom) L.push('Domicilio: ' + cop(t.dom));
+  L.push('*TOTAL: ' + cop(t.total) + '*');
+  L.push('──────────────');
+  L.push('Cliente: ' + nombre);
+  L.push('WhatsApp: ' + tel);
+  L.push('Entrega: ' + (modo==='domicilio' ? 'Domicilio' : 'Recoge en tienda'));
+  if(modo==='domicilio'){
+    L.push('Dirección: ' + $('#fDir').value.trim());
+    if($('#fBarrio').value.trim()) L.push('Barrio: ' + $('#fBarrio').value.trim());
+  }
+  L.push('Pago: ' + $('#fPago').value + ($('#fPago').value==='Efectivo' && $('#fVuelto').value.trim()? ' (paga con $'+$('#fVuelto').value.trim()+')' : ''));
+  if($('#fNota').value.trim()) L.push('Nota: ' + $('#fNota').value.trim());
+  L.push('');
+  L.push('Autorizo el tratamiento de mis datos para este pedido (Ley 1581/2012).');
+
+  window.open('https://wa.me/'+CONFIG.whatsapp+'?text='+encodeURIComponent(L.join('\n')), '_blank');
+  cerrarTodo(); toast('Pedido ' + cod + ' listo en WhatsApp');
+};
+function foco(sel,msg){ toast(msg); const e=$(sel); e.focus({preventScroll:false}); e.scrollIntoView({block:'center',behavior:'smooth'}); }
+
+/* ══════════ POLÍTICA ══════════ */
+$('#btnPrivacidad').onclick = ()=>abrirHoja('#hojaPol');
+$('#verPolitica').onclick = e=>{ e.preventDefault(); cerrarTodo(); setTimeout(()=>abrirHoja('#hojaPol'),260); };
+$('#borrarDatos').onclick = ()=>{
+  try{ Object.keys(localStorage).filter(k=>k.startsWith('rf_')).forEach(k=>localStorage.removeItem(k)); }catch(e){}
+  campos.forEach(id=>$('#'+id).value='');
+  carrito = []; sincronizar(); cerrarTodo(); toast('Datos borrados de este dispositivo');
+};
+
+/* ══════════ HORARIO ══════════ */
+function horario(){
+  const ahora = new Date(new Date().toLocaleString('en-US',{timeZone:'America/Bogota'}));
+  const h = ahora.getHours() + ahora.getMinutes()/60;
+  const abierto = h >= CONFIG.abre && h < CONFIG.cierra;
+  $('#punto').classList.toggle('cerrado', !abierto);
+  $('#horario').textContent = abierto
+    ? `Abierto ahora · hasta las ${CONFIG.cierra}:00`
+    : `Cerrado · abrimos a las ${CONFIG.abre}:00`;
+}
+horario(); setInterval(horario, 60000);
+
+/* ══════════ CONTACTO ══════════ */
+const telBonito = '+' + CONFIG.whatsapp.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})$/, '$1 $2 $3 $4');
+$('#telPie').textContent = telBonito;
+$('#btnLlamar').onclick = ()=>location.href = 'tel:+'+CONFIG.whatsapp;
+$('#btnCompartir').onclick = async ()=>{
+  const datos = {title:'Helados Rica Fruta', text:'Mira el menú y pide en línea 🍦', url:location.href};
+  if(navigator.share){ try{ await navigator.share(datos); }catch(e){} }
+  else { try{ await navigator.clipboard.writeText(location.href); toast('Enlace copiado'); }catch(e){ toast(location.href); } }
+};
+
+/* ══════════ INSTALAR ══════════ */
+let promptInstalar = null;
+addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); promptInstalar=e; $('#btnInstalar').hidden=false; });
+$('#btnInstalar').onclick = async ()=>{
+  if(!promptInstalar) return;
+  promptInstalar.prompt(); await promptInstalar.userChoice;
+  promptInstalar=null; $('#btnInstalar').hidden=true;
+};
+addEventListener('appinstalled', ()=>toast('¡App instalada! Ábrela desde tu pantalla de inicio'));
+
+/* ══════════ SERVICE WORKER ══════════ */
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+}
+
+/* ══════════ ARRANQUE ══════════ */
+sincronizar();
+setTimeout(()=>$('#splash').classList.add('off'), 1500);
+setTimeout(()=>$('#splash').remove(), 2200);
+</script>
+</body>
+</html>
