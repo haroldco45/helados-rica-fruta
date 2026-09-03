@@ -1,6 +1,6 @@
 /* Helados Rica Fruta — Service Worker
    Desarrollada por Vibras Positivas HM — Derechos de Autor Reservados */
-const CACHE = 'ricafruta-v1';
+const CACHE = 'ricafruta-v2';
 const SHELL = [
   './',
   './index.html',
@@ -12,8 +12,13 @@ const SHELL = [
   './og-image.jpg'
 ];
 
+// Se cachea archivo por archivo: si uno falta, el resto igual queda instalado.
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting()));
+  e.waitUntil(
+    caches.open(CACHE)
+      .then(c => Promise.all(SHELL.map(u => c.add(u).catch(() => null))))
+      .then(() => self.skipWaiting())
+  );
 });
 
 self.addEventListener('activate', e => {
@@ -46,6 +51,6 @@ self.addEventListener('fetch', e => {
         caches.open(CACHE).then(c => c.put(req, cp));
       }
       return r;
-    }).catch(() => hit))
+    }).catch(() => new Response('', { status: 504, statusText: 'Sin conexión' })))
   );
 });
